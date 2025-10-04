@@ -114,7 +114,10 @@ public class DefaultController<R> implements Controller {
         return new SimpleAsyncTaskExecutorBuilder()
             .virtualThreads(virtualThreads)
             .concurrencyLimit(workerCount)
-            .taskTerminationTimeout(Duration.ofSeconds(10))
+            // See https://github.com/spring-projects/spring-framework/issues/35254#issuecomment-3212944107
+            // for more
+            // After the problem resolved, we can set the task termination timeout
+            // .taskTerminationTimeout(Duration.ofSeconds(10))
             .threadNamePrefix(name + "-")
             .build();
     }
@@ -185,6 +188,8 @@ public class DefaultController<R> implements Controller {
                             log.warn("Optimistic locking failure when reconciling request: {}/{}",
                                 this.name, entry.getEntry());
                         } else if (t instanceof RequeueException re) {
+                            log.warn("{}: Requeue {} due to {}",
+                                this.name, entry.getEntry(), re.getMessage());
                             result = re.getResult();
                         } else {
                             log.error("Reconciler in " + this.name

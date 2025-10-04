@@ -21,12 +21,13 @@
     "lint": "eslint . --max-warnings=0 -f html -o build/lint-result/index.html",
     "prettier": "prettier . --write",
     "typecheck:packages": "pnpm --parallel -r run typecheck",
-    "test:unit:packages": "pnpm --parallel -r run test:unit"
+    "test:unit:packages": "pnpm --parallel -r run test:unit",
+    "publish:packages": "pnpm -r publish --access public --no-git-checks"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
     "*.{ts,mts,tsx,vue}": [
-      "eslint --fix --max-warnings=0"
+      "eslint --fix --max-warnings=0 --no-warn-ignored"
     ]
   },
   "browserslist": [
@@ -53,6 +54,7 @@
     "@codemirror/state": "^6.1.4",
     "@codemirror/view": "^6.5.1",
     "@emoji-mart/data": "^1.2.1",
+    "@formkit/addons": "^1.5.9",
     "@formkit/core": "^1.5.9",
     "@formkit/drag-and-drop": "^0.1.6",
     "@formkit/i18n": "^1.5.9",
@@ -167,7 +169,6 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-externals": "^0.6.2",
     "vite-plugin-html": "^3.2.2",
-    "vite-plugin-pwa": "^0.20.0",
     "vite-plugin-static-copy": "^1.0.6",
     "vitest": "^3.2.4",
     "vue-tsc": "^2.2.10"
